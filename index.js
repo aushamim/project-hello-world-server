@@ -19,11 +19,33 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
 });
 
-async function run() {
-  // Main Codes
-}
+const main = async () => {
+  try {
+    // Connect the client to the server       
+    await client.connect();
+    console.log('Connected successfully to Mongo');
 
-run().catch(console.dir);
+    const database = client.db('hello-world');
+    const userCollection = database.collection('post');
+
+    // APIs
+
+
+
+    // get all the users post
+    app.get('/post', async (req, res) => {
+
+    });
+
+
+  } catch (err) {
+    console.error(err);
+  } finally {
+    //   await client.close();
+  }
+};
+
+main().catch((err) => console.dir);
 
 app.get("/", (req, res) => {
   res.send("Hello World");
