@@ -12,11 +12,12 @@ app.use(express.json());
 
 const port = process.env.PORT || 5000;
 
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.suh2z.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-// const client = new MongoClient(uri, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
+const uri = `mongodb+srv://newdbuser836:amivhondho836@cluster0.sx8wv.mongodb.net/algo-digital?retryWrites=true&w=majority`;
+
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 async function run() {
   // Main Codes
