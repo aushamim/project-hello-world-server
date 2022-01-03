@@ -26,12 +26,33 @@ const main = async () => {
     console.log("Connected successfully to Mongo");
 
     const database = client.db("hello-world");
-    const userCollection = database.collection("post");
+    const usersCollection = database.collection("users");
 
     // APIs
 
     // get all the users post
     app.get("/post", async (req, res) => {});
+
+    //post user data
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      const result = await usersCollection.insertOne(user);
+      res.json(result);
+    });
+
+    // upsert user
+    app.put("/users", async (req, res) => {
+      const user = req.body;
+      const filter = { email: user.email };
+      const options = { upsert: true };
+      const updateDoc = { $set: user };
+      const result = await usersCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      res.json(result);
+    });
   } catch (err) {
     console.error(err);
   } finally {
