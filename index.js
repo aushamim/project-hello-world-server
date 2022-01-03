@@ -12,7 +12,7 @@ app.use(express.json());
 
 const port = process.env.PORT || 5000;
 
-const uri = `mongodb+srv://newdbuser836:amivhondho836@cluster0.sx8wv.mongodb.net/algo-digital?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.sx8wv.mongodb.net/algo-digital?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
@@ -21,23 +21,17 @@ const client = new MongoClient(uri, {
 
 const main = async () => {
   try {
-    // Connect the client to the server       
+    // Connect the client to the server
     await client.connect();
-    console.log('Connected successfully to Mongo');
+    console.log("Connected successfully to Mongo");
 
-    const database = client.db('hello-world');
-    const userCollection = database.collection('post');
+    const database = client.db("hello-world");
+    const userCollection = database.collection("post");
 
     // APIs
 
-
-
     // get all the users post
-    app.get('/post', async (req, res) => {
-
-    });
-
-
+    app.get("/post", async (req, res) => {});
   } catch (err) {
     console.error(err);
   } finally {
