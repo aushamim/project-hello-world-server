@@ -3,12 +3,14 @@ require("dotenv").config();
 const cors = require("cors");
 const ObjectId = require("mongodb").ObjectId;
 const { MongoClient } = require("mongodb");
+const fileUpload = require("express-fileupload");
 
 const app = express();
 
 // middleware
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload());
 
 const port = process.env.PORT || 5000;
 
