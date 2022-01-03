@@ -33,6 +33,19 @@ const main = async () => {
     // get all the users post
     app.get("/post", async (req, res) => {});
 
+    //get user data with query
+    app.get("/users", async (req, res) => {
+      let query = {};
+      const email = req.query.email;
+      if (email) {
+        query = { email: email };
+      }
+
+      const cursor = usersCollection.find(query);
+      const user = await cursor.toArray();
+      res.send(user);
+    });
+
     //post user data
     app.post("/users", async (req, res) => {
       const user = req.body;
