@@ -4,6 +4,7 @@ const cors = require("cors");
 const ObjectId = require("mongodb").ObjectId;
 const { MongoClient } = require("mongodb");
 const fileUpload = require("express-fileupload");
+const { get } = require("express/lib/response");
 
 const app = express();
 
@@ -29,13 +30,13 @@ const main = async () => {
 
     const database = client.db("hello-world");
     const usersCollection = database.collection("users");
+    const postCollection = database.collection("posts");
 
     // APIs
 
-    // get all the users post
-    app.get("/post", async (req, res) => {});
+    //get area
 
-    //get user data with query
+    //get user data
     app.get("/users", async (req, res) => {
       let query = {};
       const email = req.query.email;
@@ -48,10 +49,34 @@ const main = async () => {
       res.send(user);
     });
 
+    // get a specific user
+    app.get("/users/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const user = await usersCollection.findOne(query);
+      res.json(user);
+    });
+
+    //get post api
+    app.get("/posts", async (req, res) => {
+      const cursor = postCollection.find({});
+      const posts = await cursor.toArray();
+      res.send(posts);
+    });
+
+    //post area
+
     //post user data
     app.post("/users", async (req, res) => {
       const user = req.body;
       const result = await usersCollection.insertOne(user);
+      res.json(result);
+    });
+
+    //post user post data
+    app.post("/posts", async (req, res) => {
+      const post = req.body;
+      const result = await postCollection.insertOne(post);
       res.json(result);
     });
 
