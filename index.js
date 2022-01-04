@@ -65,6 +65,13 @@ const main = async () => {
       res.send(posts);
     });
 
+    // get stories api
+    app.get("/stories", async (req, res) => {
+      const cursor = storiesCollection.find({});
+      const stories = await cursor.toArray();
+      res.send(stories);
+    });
+
     //post area
 
     //post user data
