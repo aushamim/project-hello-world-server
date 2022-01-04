@@ -26,7 +26,7 @@ const main = async () => {
   try {
     // Connect the client to the server
     await client.connect();
-    console.log("Connected successfully to Mongo");
+    console.log("Connected successfully to Mongodb");
 
     const database = client.db("hello-world");
     const usersCollection = database.collection("users");
