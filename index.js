@@ -4,7 +4,7 @@ const cors = require("cors");
 const ObjectId = require("mongodb").ObjectId;
 const { MongoClient } = require("mongodb");
 const fileUpload = require("express-fileupload");
-const { get } = require("express/lib/response");
+// const { get } = require("express/lib/response");
 
 const app = express();
 
@@ -31,6 +31,7 @@ const main = async () => {
     const database = client.db("hello-world");
     const usersCollection = database.collection("users");
     const postCollection = database.collection("posts");
+    const storiesCollection = database.collection("stories");
 
     // APIs
 
@@ -77,6 +78,28 @@ const main = async () => {
     app.post("/posts", async (req, res) => {
       const post = req.body;
       const result = await postCollection.insertOne(post);
+      res.json(result);
+    });
+
+    //post stories data
+
+    app.post("/stories", async (req, res) => {
+      console.log("body", req.body);
+      console.log("files", req.files);
+
+      let proImage = req.body?.proImage;
+      let time = req.body?.time;
+      let pic = req.files.image;
+      const picData = pic.data;
+      const encodedPic = picData.toString("base64");
+      const imageBuffer = Buffer.from(encodedPic, "base64");
+
+      const storyData = {
+        proImage,
+        time,
+        image: imageBuffer,
+      };
+      const result = await storiesCollection.insertOne(storyData);
       res.json(result);
     });
 
