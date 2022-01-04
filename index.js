@@ -4,6 +4,7 @@ const cors = require("cors");
 const ObjectId = require("mongodb").ObjectId;
 const { MongoClient } = require("mongodb");
 const fileUpload = require("express-fileupload");
+const { signal } = require("nodemon/lib/config/defaults");
 // const { get } = require("express/lib/response");
 
 const app = express();
@@ -65,6 +66,14 @@ const main = async () => {
       res.send(posts);
     });
 
+    // get a single post api
+    app.get("/posts/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const post = await postCollection.findOne(query);
+      res.send(post);
+    });
+
     // get stories api
     app.get("/stories", async (req, res) => {
       const cursor = storiesCollection.find({});
@@ -118,6 +127,16 @@ const main = async () => {
         updateDoc,
         options
       );
+      res.json(result);
+    });
+
+    // delete data
+
+    //delete a  post data
+    app.delete("/posts/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await postCollection.deleteOne(query);
       res.json(result);
     });
   } catch (err) {
