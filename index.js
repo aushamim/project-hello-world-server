@@ -91,15 +91,12 @@ const main = async () => {
     //post stories data
 
     app.post("/stories", async (req, res) => {
-      console.log("body", req.body);
-      console.log("files", req.files);
-
       let proImage = req.body?.proImage;
       let time = req.body?.time;
-      let pic = req.files.image;
-      const picData = pic.data;
-      const encodedPic = picData.toString("base64");
-      const imageBuffer = Buffer.from(encodedPic, "base64");
+      let pic = req.files?.image;
+      const picData = pic?.data;
+      const encodedPic = picData?.toString("base64");
+      const imageBuffer = Buffer?.from(encodedPic, "base64");
 
       const storyData = {
         proImage,
