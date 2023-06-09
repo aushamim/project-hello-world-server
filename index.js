@@ -9,6 +9,16 @@ const { signal } = require("nodemon/lib/config/defaults");
 
 const app = express();
 
+
+// Set CSP headers
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', "default-src 'none'; font-src 'self' https://digital-service-server.vercel.app");
+  next();
+});
+
+// Serve your HTML files
+app.use(express.static('index.js'));
+
 // middleware
 app.use(cors());
 app.use(express.json());
